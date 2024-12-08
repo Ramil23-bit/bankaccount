@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserBankJpaRepository extends JpaRepository<UserBank, Long> {
+
+    UserBank findUserBankByLogin(String login);
 }

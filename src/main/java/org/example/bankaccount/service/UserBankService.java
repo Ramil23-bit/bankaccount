@@ -9,9 +9,15 @@ public interface UserBankService {
 
     List<UserBank> getAll();
 
-    Optional<UserBank> getById(Long id);
+    UserBank getById(Long id);
 
     UserBank create(UserBank userBank);
 
-    void delete(Long id);
+    void deleteById(Long id);
+
+    UserBank getByName(String name);
+
+    Long getCurrentId();
+
+//    UserBank saveUserBankWithAccount(UserBank userBank);
 }
