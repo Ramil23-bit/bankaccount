@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.bankaccount.entity.UserBank;
 import org.example.bankaccount.enums.CurrencyType;
 
 import java.math.BigDecimal;
@@ -18,4 +19,6 @@ public class AccountCreateDto {
     private BigDecimal amount;
 
     private CurrencyType currencyType;
+
+    private Long number;
 }

@@ -2,6 +2,7 @@ package org.example.bankaccount.service;
 
 import org.example.bankaccount.entity.Account;
 import org.example.bankaccount.entity.UserBank;
+import org.example.bankaccount.enums.Role;
 import org.example.bankaccount.exception.UserNotFoundException;
 import org.example.bankaccount.repository.UserBankJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,27 @@ public class UserBankServiceImpl implements UserBankService {
         }
         return null;
     }
+    @Override
+    public UserBank changeUserBankRole(UserBank userBank){
+        Long currentUserBank = getCurrentId();
+        UserBank currentUser = getById(currentUserBank);
+        if(currentUserBank == 3){
+            currentUser.setRole(Role.ROLE_ADMIN);
+            userBankJpa.save(currentUser);
+        }
+        return currentUser;
+    }
 
-    public void changeUserBankRole(UserBank userBank, BigDecimal amount){
-        Long currentUserBAnk = getCurrentId();
-        UserBank currentUser = getById(currentUserBAnk);
-        List<Account> accountList = currentUser.getAccountList();
-
+    @Override
+    public UserBank changeUserBankRoleById(Long id) {
+        Long currentUserBankId = getCurrentId();
+        UserBank currentUser = getById(currentUserBankId);
+        UserBank changeUserBank = getById(id);
+        if(currentUser.getRole().equals(Role.ROLE_ADMIN)){
+            changeUserBank.setRole(Role.ROLE_ADMIN);
+            userBankJpa.save(changeUserBank);
+        }
+        return changeUserBank;
     }
 
 

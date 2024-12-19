@@ -19,5 +19,6 @@ public interface AccountService {
 
     String getCurrentUserBankName();
 
-    Account saveForUserBank(Long id);
+    //создание аккаунта для текущего пользователя
+    Account saveAccountForCurrentUserBank(Account account);
 }

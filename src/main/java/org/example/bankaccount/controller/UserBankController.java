@@ -1,7 +1,9 @@
 package org.example.bankaccount.controller;
 
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.example.bankaccount.converter.Converter;
+import org.example.bankaccount.dto.UserBankChangeRoleDto;
 import org.example.bankaccount.dto.UserBankCreateDto;
 import org.example.bankaccount.dto.UserBankResponseDto;
 import org.example.bankaccount.entity.UserBank;
@@ -27,6 +29,9 @@ public class UserBankController {
 
     @Autowired
     private Converter<UserBank, UserBankCreateDto, UserBankResponseDto> userCreateConverter;
+
+    @Autowired
+    private Converter<UserBank, UserBankCreateDto, UserBankChangeRoleDto> userChangeRole;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -57,6 +62,18 @@ public class UserBankController {
     @PostMapping("/login")
     public JwtAuthenticationResponse login(@RequestBody SignInRequest request) {
         return authenticationService.authenticate(request);
+    }
+
+    @PostMapping("/change")
+    public UserBankChangeRoleDto change(@RequestBody  @Valid UserBankCreateDto userBankCreateDto){
+        UserBank userBank = userChangeRole.toEntity(userBankCreateDto);
+        UserBank userFromDataBase = userBankService.changeUserBankRole(userBank);
+        return userChangeRole.toDto(userFromDataBase);
+    }
+
+    @PostMapping("/change/{id}")
+    public UserBank changeById(@PathVariable(name = "id")Long id){
+        return userBankService.changeUserBankRoleById(id);
     }
 
     @DeleteMapping("/{id}")

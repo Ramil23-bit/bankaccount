@@ -3,6 +3,7 @@ package org.example.bankaccount.service;
 import org.example.bankaccount.entity.Account;
 import org.example.bankaccount.entity.UserBank;
 import org.example.bankaccount.exception.AccountNotFoundException;
+import org.example.bankaccount.exception.AccountUncorrectedId;
 import org.example.bankaccount.repository.AccountJpaRepository;
 import org.example.bankaccount.repository.UserBankJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +21,9 @@ public class AccountServiceImpl implements  AccountService{
     @Autowired
     private AccountJpaRepository accountJpa;
 
+    @Autowired
+    private UserBankService userBankService;
+
     @Override
     public List<Account> getAll() {
         return accountJpa.findAll();
@@ -26,6 +31,7 @@ public class AccountServiceImpl implements  AccountService{
 
     @Override
     public Account getById(Long id) {
+        if(id == null) throw new AccountUncorrectedId("Account ID cannot be NULL");
         return accountJpa.findById(id)
                 .orElseThrow(()-> new AccountNotFoundException("Account with id " + id + " not found"));
     }
@@ -50,9 +56,12 @@ public class AccountServiceImpl implements  AccountService{
     }
 
     @Override
-    public Account saveForUserBank(Long id) {
-        return null;
+    public Account saveAccountForCurrentUserBank(Account account) {
+        Long currentId = userBankService.getCurrentId();
+        UserBank currentUserBank = userBankService.getById(currentId);
+        List<Account> currentAccountList = currentUserBank.getAccountList();
+        currentAccountList.add(account);
+        return accountJpa.save(account);
     }
-
 
 }

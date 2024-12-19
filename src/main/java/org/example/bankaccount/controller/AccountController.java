@@ -49,10 +49,10 @@ public class AccountController {
         return converterAccount.toDto(accountFromDataBase);
     }
 
-//    @PostMapping
-//    public Account createForUserBank(@RequestBody Account account, @PathVariable(name = "id") Long id){
-//        return new Account();
-//    }
+    @PostMapping("/create_current")
+    public Account createAccountForCurrentUserBank(@RequestBody @Valid Account account){
+        return accountService.saveAccountForCurrentUserBank(account);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable(name = "id") Long id){

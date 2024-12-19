@@ -1,15 +1,16 @@
 package org.example.bankaccount.converter;
 
+import org.example.bankaccount.dto.UserBankChangeRoleDto;
 import org.example.bankaccount.dto.UserBankCreateDto;
-import org.example.bankaccount.dto.UserBankResponseDto;
+
 import org.example.bankaccount.entity.UserBank;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserCreateConverter implements Converter<UserBank, UserBankCreateDto, UserBankResponseDto> {
+public class UserChangeConverter implements Converter<UserBank, UserBankCreateDto,UserBankChangeRoleDto>{
     @Override
-    public UserBankResponseDto toDto(UserBank userBank) {
-        return new UserBankResponseDto(userBank.getId(), userBank.getLogin(), userBank.getEmail(), userBank.getAccountList());
+    public UserBankChangeRoleDto toDto(UserBank userBank) {
+        return new UserBankChangeRoleDto(userBank.getId(), userBank.getLogin(), userBank.getRole());
     }
 
     @Override
@@ -17,5 +18,4 @@ public class UserCreateConverter implements Converter<UserBank, UserBankCreateDt
         return new UserBank(userBankCreateDto.getName(), userBankCreateDto.getLogin(), userBankCreateDto.getPassword()
                 ,userBankCreateDto.getEmail(), userBankCreateDto.getAccountList());
     }
-
 }

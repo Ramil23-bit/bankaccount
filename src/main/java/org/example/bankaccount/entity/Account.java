@@ -30,18 +30,19 @@ public class Account {
     @Column(name = "currency_type", columnDefinition = "VARCHAR(60)")
     private CurrencyType currencyType;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserBank user;
+
+//    @JoinColumn(name = "user")
+//    private UserBank user;
 
     public Account(Long id, BigDecimal amount) {
         this.id = id;
         this.amount = amount;
     }
 
-    public Account(Long id, BigDecimal amount, CurrencyType currencyType) {
+    public Account(Long id, BigDecimal amount, CurrencyType currencyType, Long number) {
         this.id = id;
         this.amount = amount;
         this.currencyType = currencyType;
+        this.number = number;
     }
 }

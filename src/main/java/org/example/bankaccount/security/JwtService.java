@@ -47,6 +47,7 @@ public class JwtService {
     }
 
     public String extractUserBankName(String jwt){
+        if(jwt == null) throw new NullPointerException("Jwt can not be NULL");
         return extractClaims(jwt, Claims::getSubject);
     }
 
@@ -64,11 +65,16 @@ public class JwtService {
         return extractClaims(jwt, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token){
+    private Claims extractAllClaims(String token) {
+        try {
+            if (token.contains(" ")) throw new Exception("Token contains a SPACE");
+        } catch (Exception e) {
+            e.getMessage();
+        }
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(token.trim())
                 .getPayload();
     }
 

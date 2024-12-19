@@ -7,12 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.bankaccount.entity.Account;
+
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserBankCreateDto {
+
+    private String name;
 
     @NotNull
     @NotBlank
@@ -22,4 +27,6 @@ public class UserBankCreateDto {
     private String email;
 
     private String password;
+
+    private List<Account> accountList;
 }

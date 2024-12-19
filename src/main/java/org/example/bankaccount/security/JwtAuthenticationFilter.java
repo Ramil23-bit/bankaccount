@@ -33,9 +33,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
         String jwt = header.substring("Bearer".length());
-        String userBankName = jwtService.extractUserBankName(jwt);
+        String userBankName = jwtService.extractUserBankName(jwt).trim();
 
         if(!userBankName.isEmpty() && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userBankName);

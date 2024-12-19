@@ -37,19 +37,22 @@ public class UserBank {
     @Email
     private String email;
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-    //@JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name= "user_bank_id")
     private List<Account> accountList;
 
-    public UserBank(String login, String email) {
+    public UserBank(Long id, String login, Role role) {
+        this.id = id;
         this.login = login;
-        this.email = email;
+        this.role = role;
     }
 
 
-    public UserBank(String login, String password, String email) {
+    public UserBank(String name, String login, String password, String email, List<Account> accountList) {
+        this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.accountList = accountList;
     }
 }

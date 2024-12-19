@@ -16,6 +16,7 @@ public class AccountCreateConverter implements Converter<Account, AccountCreateD
 
     @Override
     public Account toEntity(AccountCreateDto accountCreateDto) {
-        return new Account(accountCreateDto.getId(), accountCreateDto.getAmount(),accountCreateDto.getCurrencyType());
+        return new Account(accountCreateDto.getId(), accountCreateDto.getAmount()
+                ,accountCreateDto.getCurrencyType(), accountCreateDto.getNumber());
     }
 }

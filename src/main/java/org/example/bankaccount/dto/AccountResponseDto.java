@@ -8,11 +8,14 @@ import org.example.bankaccount.enums.CurrencyType;
 import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class AccountResponseDto {
 
     private Long id;
 
     private BigDecimal amount;
 
+    public AccountResponseDto(Long id, BigDecimal amount) {
+        this.id = id;
+        this.amount = amount;
+    }
 }
