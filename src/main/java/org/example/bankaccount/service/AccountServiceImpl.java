@@ -3,18 +3,13 @@ package org.example.bankaccount.service;
 import org.example.bankaccount.entity.Account;
 import org.example.bankaccount.entity.UserBank;
 import org.example.bankaccount.exception.AccountNotFoundException;
-import org.example.bankaccount.exception.AccountUncorrectedId;
 import org.example.bankaccount.repository.AccountJpaRepository;
-import org.example.bankaccount.repository.UserBankJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements  AccountService{
@@ -31,7 +26,6 @@ public class AccountServiceImpl implements  AccountService{
 
     @Override
     public Account getById(Long id) {
-        if(id == null) throw new AccountUncorrectedId("Account ID cannot be NULL");
         return accountJpa.findById(id)
                 .orElseThrow(()-> new AccountNotFoundException("Account with id " + id + " not found"));
     }
